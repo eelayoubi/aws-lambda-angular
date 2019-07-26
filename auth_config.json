@@ -1,0 +1,8 @@
+{
+    "auth0": {
+        "client_id": "",
+        "domain": "",
+        "audience": ""
+    },
+    "api_base_url": ""
+}

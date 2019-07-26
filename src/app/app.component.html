@@ -1,0 +1,44 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<router-outlet></router-outlet>
+<mat-toolbar class="toolbar">
+  <button mat-button color="primary">24 Hour Video</button>
+  <div>
+    <button *ngIf="isAuthenticated" (click)="getUserProfile()" mat-button color="primary">profile</button>
+    <button *ngIf="!isAuthenticated" mat-button color="primary" (click)="login()">Log In</button>
+    <button *ngIf="isAuthenticated" (click)="logout()" mat-button color="primary">Log off</button>
+  </div>
+</mat-toolbar>
+
+<div class="jumbotron">
+  <div class="container">
+    <img src="../assets/images/popcorn.png" />
+    <div class="description">
+      <h1>All videos. All the time.</h1>
+      <p>Guaranteed 100% server free.</p>
+    </div>
+
+  </div>
+</div>
+
+<div *ngIf="isAuthenticated" class="image-upload">
+  <label for="file-input">
+    <mat-icon>cloud_upload</mat-icon>
+  </label>
+  <input id="file-input" type="file" (change)="handleFileInput($event.target.files)" />
+</div>
+
+<mat-progress-bar *ngIf="isUploading && !isUploadDone" class="progress-bar" mode="determinate" [value]="percentDone"></mat-progress-bar>
+
+<div>
+  <div class="videos">
+    <div *ngFor="let video of videos" class="videos-wrapper">
+      <video controls preload="metadata">
+        <source src="{{video.source}}" type="video/mp4" />
+        Your browser does not support HTML5 video.
+      </video>
+      <button *ngIf="isAuthenticated && video.ref else cannotDelete" mat-button color="primary" (click)="deleteVideo(video)">Delete
+        me</button>
+      <ng-template #cannotDelete>Cannot be deleted.</ng-template>
+    </div>
+  </div>
+</div>
